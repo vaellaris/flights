@@ -1,10 +1,11 @@
 module Api
   module V1
     class AirlinesController < ApplicationController
+
       def index
         airlines = Airline.all
 
-        render json: AirlineSerializer.new(airlines, options)
+        render json: AirlineSerializer.new(airlines, options).serialized_json
       end
 
       def show
@@ -43,19 +44,18 @@ module Api
         end
       end
 
-
+      private
 
       def airline_params
         params.require(:airline).permit(:name, :image_url)
       end
 
       def options
-
-        #turning it into a compound document
+        # turning it into a compound document
         # AKA when we make a new instance of our airline serializer
-         # so we can pass in an option hash and specify the additional resources we want to include in that
-        #specify the resources we want to include
-        @options ||= {include: %i[reviews]}
+        # so we can pass in an option hash and specify the additional resources we want to include in that
+        # specify the resources we want to include
+        @options ||= { include: %i[reviews] }
       end
     end
   end
