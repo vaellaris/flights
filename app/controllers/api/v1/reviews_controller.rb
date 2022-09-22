@@ -15,11 +15,10 @@ module Api
         def destroy
           review = Review.find(params[:id])
 
-          if review.save
-              render json: ReviewSerializer.new(review).serialized_json
-            else
-              render json: {error: reviews.errors.messages}, status: 422
-            end
+          if review.destroy
+            head :no_content
+          else
+            render json: {error: review.errors.messages}, status: 422
           end
 
       end
