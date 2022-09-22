@@ -1,6 +1,7 @@
 module Api
   module V1
     class AirlinesController < ApplicationController
+      protect_from_forgery with: :null_session
 
       def index
         airlines = Airline.all
@@ -35,7 +36,7 @@ module Api
       end
 
       def destroy
-        airline = Airline.find_by(slug: param[:slug])
+        airline = Airline.find_by(slug: params[:slug])
 
         if airline.destroy
           head :no_content
