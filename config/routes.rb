@@ -9,5 +9,5 @@ Rails.application.routes.draw do
   end
     # to route requests that arent for existing paths predefined in our api back to our index path
     #this will allow us routing to our react compenents without interfering with out actual Rails Routes.
-  get path '*path', to: 'pages#index', via: :all
+  get '*path', to: 'pages#index', via: :all
 end

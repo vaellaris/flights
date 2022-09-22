@@ -4,12 +4,12 @@ module Api
       def index
         airlines = Airline.all
 
-        render AirlineSerializer.new(airlines, options).serialized_json
+        render json: AirlineSerializer.new(airlines, options)
       end
 
       def show
-        airline = airline.find_by(slug: param[:slug])
-        render json: AirlineSerializer.new(airlines, options).serialized_json
+        airline = Airline.find_by(slug: params[:slug])
+        render json: AirlineSerializer.new(airline, options)
 
       end
 
@@ -17,17 +17,17 @@ module Api
         airline = Airline.new(airline_params)
 
         if airline.save
-          render json: AirlineSerializer.new(airlines).serialized_json
+          render json: AirlineSerializer.new(airline)
         else
           render json: {error: airline.errors.messages}, status: 422
         end
       end
 
       def update
-        airline = Airline.find_by(slug: param[:slug])
+        airline = Airline.find_by(slug: params[:slug])
 
         if airline.update(airline_params)
-          render json: AirlineSerializer.new(airlines, options).serialized_json
+          render json: AirlineSerializer.new(airline, options)
         else
           render json: {error: airline.errors.messages}, status: 422
         end
@@ -55,7 +55,7 @@ module Api
         # AKA when we make a new instance of our airline serializer
          # so we can pass in an option hash and specify the additional resources we want to include in that
         #specify the resources we want to include
-        @options || = {include: %i[reviews]}
+        @options ||= {include: %i[reviews]}
       end
     end
   end
